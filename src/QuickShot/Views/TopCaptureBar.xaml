@@ -1,0 +1,92 @@
+<UserControl x:Class="QuickShot.Views.TopCaptureBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Resources>
+        <Style x:Key="ModeRadioStyle" TargetType="RadioButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="2,0"/>
+            <Setter Property="Padding" Value="10,6"/>
+            <Setter Property="GroupName" Value="CaptureModeGroup"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                                CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" TextElement.FontSize="13"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#383838"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#007ACC"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CloseButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#A0A0A0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="2,0"/>
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                                CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#C42B1C"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Border Background="#242424" BorderBrush="#3A3A3C" BorderThickness="1"
+            CornerRadius="8" Padding="6,4">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="16" ShadowDepth="4" Opacity="0.45" Color="Black"/>
+        </Border.Effect>
+
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <!-- Mode: Rectangle -->
+            <RadioButton x:Name="RadioRect" Style="{StaticResource ModeRadioStyle}"
+                         Content="직사각형" Click="OnModeClicked" ToolTip="직사각형 영역 드래그 캡처"/>
+
+            <!-- Mode: Window -->
+            <RadioButton x:Name="RadioWindow" Style="{StaticResource ModeRadioStyle}"
+                         Content="창" Click="OnModeClicked" ToolTip="마우스 아래 창 자동 감지 및 원클릭 캡처"/>
+
+            <!-- Mode: FullScreen (Active Monitor) -->
+            <RadioButton x:Name="RadioFullScreen" Style="{StaticResource ModeRadioStyle}"
+                         Content="현재 화면" Click="OnModeClicked" ToolTip="현재 활성 모니터 전체 캡처"/>
+
+            <!-- Mode: AllMonitors (All 4 Monitors) -->
+            <RadioButton x:Name="RadioAllMonitors" Style="{StaticResource ModeRadioStyle}"
+                         Content="모든 화면" Click="OnModeClicked" ToolTip="모든 모니터 전체 화면 캡처"/>
+
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"
+                       Margin="6,2" Background="#444444"/>
+
+            <!-- Close Button -->
+            <Button Style="{StaticResource CloseButtonStyle}" Click="OnCloseClicked" ToolTip="닫기 (ESC)">
+                <TextBlock Text="✕" FontSize="14" FontWeight="Bold"/>
+            </Button>
+        </StackPanel>
+    </Border>
+</UserControl>

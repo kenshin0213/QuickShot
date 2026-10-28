@@ -1,0 +1,63 @@
+<Window x:Class="QuickShot.Views.VirtualCanvasWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:views="clr-namespace:QuickShot.Views"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Topmost="True"
+        ShowInTaskbar="False"
+        WindowStartupLocation="Manual"
+        Focusable="True">
+    <Grid x:Name="RootGrid" ClipToBounds="True">
+        <!-- Frozen screen snapshot -->
+        <Image x:Name="BackgroundImage" Stretch="Fill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+
+        <!-- Overlay Canvas for Dimmer, Selection, Handles, and Annotations -->
+        <Canvas x:Name="OverlayCanvas" Background="Transparent"
+                MouseDown="OnCanvasMouseDown"
+                MouseMove="OnCanvasMouseMove"
+                MouseUp="OnCanvasMouseUp">
+
+            <!-- Dark Dimmer Mask -->
+            <Path x:Name="DimmerMask" Fill="#70000000">
+                <Path.Data>
+                    <CombinedGeometry GeometryCombineMode="Exclude">
+                        <CombinedGeometry.Geometry1>
+                            <RectangleGeometry x:Name="FullScreenGeometry" />
+                        </CombinedGeometry.Geometry1>
+                        <CombinedGeometry.Geometry2>
+                            <RectangleGeometry x:Name="SelectionGeometry" />
+                        </CombinedGeometry.Geometry2>
+                    </CombinedGeometry>
+                </Path.Data>
+            </Path>
+
+            <!-- Window Hover Border (창 모드 시 실시간 하이라이트) -->
+            <Rectangle x:Name="WindowHoverBorder" Stroke="#007ACC" StrokeThickness="2.5" Fill="#25007ACC"
+                       Visibility="Collapsed" IsHitTestVisible="False" />
+
+            <!-- Selection Box Border -->
+            <Rectangle x:Name="SelectionBorder" Stroke="#007ACC" StrokeThickness="2" Visibility="Collapsed" IsHitTestVisible="False" />
+
+            <!-- Annotation Vector Layer -->
+            <Canvas x:Name="AnnotationCanvas" IsHitTestVisible="False" />
+
+            <!-- Resize Handles Layer -->
+            <Canvas x:Name="HandlesCanvas" Visibility="Collapsed" IsHitTestVisible="False" />
+
+            <!-- Floating Toolbar -->
+            <views:FloatingToolbar x:Name="Toolbar" Visibility="Collapsed" />
+        </Canvas>
+
+        <!-- Top Capture Bar (Windows 11 스타일) -->
+        <views:TopCaptureBar x:Name="TopBar" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,16,0,0" />
+
+        <!-- Copy Feedback Toast -->
+        <Border x:Name="ToastBorder" Background="#F0242424" BorderBrush="#007ACC" BorderThickness="1"
+                CornerRadius="6" Padding="14,8" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                Margin="0,0,0,36" Visibility="Collapsed" IsHitTestVisible="False">
+            <TextBlock x:Name="ToastText" Text="클립보드에 수정본이 복사되었습니다" Foreground="#4ADE80" FontSize="13" FontWeight="SemiBold"/>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,75 @@
+<UserControl x:Class="QuickShot.Views.FloatingToolbar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="#2D2D30" Foreground="White"
+             BorderBrush="#007ACC" BorderThickness="1"
+             Padding="4">
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#3E3E42"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="2,0"/>
+            <Setter Property="Padding" Value="6,3"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#007ACC"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="RadioButton">
+            <Setter Property="Background" Value="#3E3E42"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="2,0"/>
+            <Setter Property="Padding" Value="6,3"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="GroupName" Value="Tools"/>
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="#007ACC"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+        <RadioButton x:Name="BtnRect" Content="사각형" Click="OnToolSelected" Tag="Rectangle" />
+        <RadioButton x:Name="BtnArrow" Content="화살표" Click="OnToolSelected" Tag="Arrow" />
+        <RadioButton x:Name="BtnText" Content="텍스트" Click="OnToolSelected" Tag="Text" />
+        <RadioButton x:Name="BtnPixelate" Content="모자이크" Click="OnToolSelected" Tag="Pixelate" />
+        <RadioButton x:Name="BtnHighlighter" Content="형광펜" Click="OnToolSelected" Tag="Highlighter" />
+
+        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="4,0" Background="#555"/>
+
+        <ComboBox x:Name="ColorCombo" Width="60" Margin="2,0" VerticalAlignment="Center"
+                  SelectionChanged="OnColorChanged">
+            <ComboBoxItem Content="빨강" Tag="#FFFF0000" IsSelected="True"/>
+            <ComboBoxItem Content="파랑" Tag="#FF0080FF"/>
+            <ComboBoxItem Content="초록" Tag="#FF00CC00"/>
+            <ComboBoxItem Content="노랑" Tag="#FFFFFF00"/>
+            <ComboBoxItem Content="검정" Tag="#FF000000"/>
+            <ComboBoxItem Content="흰색" Tag="#FFFFFFFF"/>
+        </ComboBox>
+
+        <ComboBox x:Name="FontSizeCombo" Width="68" Margin="2,0" VerticalAlignment="Center"
+                  SelectionChanged="OnFontSizeChanged" ToolTip="글자 크기">
+            <ComboBoxItem Content="12pt" Tag="12"/>
+            <ComboBoxItem Content="16pt" Tag="16" IsSelected="True"/>
+            <ComboBoxItem Content="20pt" Tag="20"/>
+            <ComboBoxItem Content="24pt" Tag="24"/>
+            <ComboBoxItem Content="32pt" Tag="32"/>
+            <ComboBoxItem Content="40pt" Tag="40"/>
+        </ComboBox>
+
+        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="4,0" Background="#555"/>
+
+        <Button Content="실행취소(Ctrl+Z)" Click="OnUndoClicked" ToolTip="Ctrl+Z" />
+        <Button Content="저장(Ctrl+S)" Click="OnSaveClicked" ToolTip="파일로 저장" />
+        <Button Content="완료/복사(Enter)" Background="#0E639C" Click="OnCompleteClicked" ToolTip="클립보드 복사 및 저장" FontWeight="Bold"/>
+        <Button Content="취소(Esc)" Click="OnCancelClicked" ToolTip="ESC" />
+    </StackPanel>
+</UserControl>

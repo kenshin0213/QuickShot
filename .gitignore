@@ -1,0 +1,25 @@
+## Build and binary output
+[Bb]in/
+[Oo]bj/
+publish/
+tmp/
+.scratch/
+
+## User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## IDE & Editor files
+.vs/
+.vscode/
+.idea/
+
+## OS generated files
+Thumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+## QuickShot runtime / config
+settings.json
